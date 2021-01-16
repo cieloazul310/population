@@ -1,0 +1,40 @@
+{
+  "name": "population-cli",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "bin": {
+    "calc-population": "bin/calc-population"
+  },
+  "scripts": {
+    "dev": "ts-node --files src/index.ts",
+    "dev:watch": "ts-node-dev --files --respawn src/index.ts",
+    "clean": "rimraf lib/*",
+    "tsc": "tsc",
+    "build": "npm-run-all clean tsc",
+    "start": "node ./lib/index.js",
+    "check-types": "tsc --noEmit",
+    "eslint": "eslint src/**/*.ts",
+    "eslint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write 'src/**/*.{js,ts,json}'",
+    "lint": "npm-run-all eslint check-types",
+    "lint:fix": "npm-run-all eslint:fix check-types format"
+  },
+  "dependencies": {
+    "@turf/bbox": "^6.2.0",
+    "@turf/helpers": "^6.2.0",
+    "@types/d3-scale": "^3.2.2",
+    "@types/d3-scale-chromatic": "^2.0.0",
+    "canvasmap": "0.1.0",
+    "commander": "^6.2.0",
+    "d3-scale": "^3.2.3",
+    "d3-scale-chromatic": "^2.0.0",
+    "population-calculator": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.10",
+    "ts-node": "^9.0.0",
+    "ts-node-dev": "^1.0.0",
+    "typescript": "^4.1.2"
+  }
+}

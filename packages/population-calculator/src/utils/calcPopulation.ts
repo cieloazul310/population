@@ -16,6 +16,10 @@ export interface CalcPopulationOptions {
    * enable to set local tiles
    */
   baseUrl?: string;
+  /**
+   * enable to load many tiles
+   */
+  hard: boolean;
 }
 
 /**
@@ -36,7 +40,7 @@ export async function calcPopulation<T extends Mode>(
   const largest = circles[circles.length - 1];
   const tiles = getTilesFromFeature(largest, { min_zoom: 14, max_zoom: 14 }) ?? [];
   if (tiles.length === 0) throw new Error('There are no tiles');
-  if (tiles.length > 200) throw new Error('Too many tiles');
+  if (!options?.hard && tiles.length > 200) throw new Error('Too many tiles');
 
   try {
     const points = await getPopulationTiles(tiles, mode, { baseUrl: options?.baseUrl });

@@ -1,10 +1,10 @@
-import { calcPopulation } from 'population-calculator';
-import { CanvasMap } from 'canvasmap';
+import { calcPopulation } from 'population-calculator/src/utils/calcPopulation';
+import { CanvasMap } from 'canvasmap/src/canvasMap';
 import { program } from 'commander';
 import { scaleSequential } from 'd3-scale';
 import { interpolateSpectral } from 'd3-scale-chromatic'; 
 import bbox from '@turf/bbox';
-import { parseCenter, parseRadiuses, parseUnit, parseMode, parseUrl } from './utils/helpers';
+import { parseCenter, parseRadiuses, parseUnit, parseMode, parseUrl, unitToString, pointRadius } from './utils/helpers';
 
 program.version('0.0.1');
 
@@ -14,18 +14,22 @@ program
   .option('-r, --radiuses <radiuses>', 'radiuses')
   .option('-u, --unit <unit>', 'unit', 'kilometers')
   .option('-m, --mode <mode>', 'mode', 'mesh250')
+  .option('-t, --title <title>', 'title')
+  .option('--hard', 'enable to load many tiles')
   .option('--baseUrl <url>', 'base url');
 
 program.parse(process.argv);
 
-const center = parseCenter(program.center as string);
-const radiuses = parseRadiuses(program.radiuses as string);
+const center = parseCenter(program.center as string | null);
+const radiuses = parseRadiuses(program.radiuses as string | null);
 const unit = parseUnit(program.unit as string);
 const mode = parseMode(program.mode as string);
+const title = (program.title as string | null) ?? center.join(' ');
+const hard = (program.hard as boolean | null) ?? false;
 const baseUrl = parseUrl(program.baseUrl);
 
-console.log(center);
-console.log(radiuses);
+console.log(`center: ${center.join(', ')}`);
+console.log(`radiuses: ${radiuses.join(', ')}`);
 console.log(unit);
 console.log(mode);
 console.log(baseUrl);
@@ -35,19 +39,23 @@ const color = (val: number) =>
     ? scaleSequential(interpolateSpectral).domain([800, 100])
     : scaleSequential(['#fff', interpolateSpectral(1)]).domain([0, 100]))(val);
 
-calcPopulation(center, radiuses, 'mesh250', { unit, baseUrl })
+calcPopulation(center, radiuses, 'mesh250', { unit, baseUrl, hard })
   .then((population) => {
+    population.forEach(({ feature, points }) => {
+      const val = points.reduce((accum, curr) => accum + curr.properties.val, 0);
+      console.log(`${feature.properties.radius}: ${val}`);
+    });
     const largest = population[population.length - 1];
     const { points, feature } = largest;
     const file = `../../dist/hoge.png`;
 
-    return new CanvasMap(1600, 1600, feature, { title: center.join(' ') })
+    return new CanvasMap(1600, 1600, feature, { title })
       .renderBasemap('vector')
       .then((map) => {
         const context = map.getContext();
         const { width } = map.getSize();
         const projection = map.getProjection();
-        const path = map.getPath();
+        const path = map.getPath().pointRadius(pointRadius(projection.scale(), mode));
         
         points.forEach((point) => {
           context.beginPath();
@@ -70,13 +78,13 @@ calcPopulation(center, radiuses, 'mesh250', { unit, baseUrl })
           if (feature.properties?.radius) {
             const [minX, minY] = bbox(feature);
             const pos = projection([minX, minY]) ?? [0, 0];
-            const fontSize = map.getMapFontSize().large;
+            const fontSize = map.getMapFontSize().attribution;
 
             context.font = `${fontSize}px sans-serif`;
             context.textAlign = 'right';
             context.textBaseline = 'bottom';
             context.fillStyle = '#c44';
-            context.fillText(`${(feature.properties?.radius as number)}km`, width - 6, pos[1]);
+            context.fillText(`${(feature.properties.radius)}${unitToString(unit)}`, width - 6, pos[1]);
           }
         });
 

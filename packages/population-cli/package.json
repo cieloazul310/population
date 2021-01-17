@@ -12,7 +12,7 @@
     "clean": "rimraf lib/*",
     "tsc": "tsc",
     "build": "npm-run-all clean tsc",
-    "start": "node ./lib/index.js",
+    "start": "node ./lib/index.js -c 140.412226,36.345185 -r 1000,3000,5000,10000 --hard -u meters -t ケーズデンキスタジアム10km圏内人口 --baseUrl '/Users/cieloazul310/Documents/github/binarytiles/docs/tile/population_250m/{z}/{x}/{y}.mvt'",
     "check-types": "tsc --noEmit",
     "eslint": "eslint src/**/*.ts",
     "eslint:fix": "eslint src/**/*.ts --fix",

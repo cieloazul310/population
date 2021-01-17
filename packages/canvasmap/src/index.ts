@@ -1,2 +1,3 @@
-import { CanvasMap } from './canvasMap';
-export { CanvasMap };
+export { CanvasMap } from './canvasMap';
+export * from './utils';
+export * from './tilemap';

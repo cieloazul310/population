@@ -1,5 +1,5 @@
-import { calcPopulation } from 'population-calculator/src/utils/calcPopulation';
-import { CanvasMap } from 'canvasmap/src/canvasMap';
+import { calcPopulation } from 'population-calculator';
+import { CanvasMap } from 'canvasmap';
 import { program } from 'commander';
 import { scaleSequential } from 'd3-scale';
 import { interpolateSpectral } from 'd3-scale-chromatic'; 
@@ -30,9 +30,9 @@ const baseUrl = parseUrl(program.baseUrl);
 
 console.log(`center: ${center.join(', ')}`);
 console.log(`radiuses: ${radiuses.join(', ')}`);
-console.log(unit);
-console.log(mode);
-console.log(baseUrl);
+console.log(`unit: ${unit}`);
+console.log(`mode: ${mode}`);
+console.log(`baseUrl: ${baseUrl ?? ''}`);
 
 const color = (val: number) =>
   (val > 100
@@ -47,7 +47,7 @@ calcPopulation(center, radiuses, 'mesh250', { unit, baseUrl, hard })
     });
     const largest = population[population.length - 1];
     const { points, feature } = largest;
-    const file = `../../dist/hoge.png`;
+    const file = `../../dist/${title}.png`;
 
     return new CanvasMap(1600, 1600, feature, { title })
       .renderBasemap('vector')

@@ -1,6 +1,6 @@
 import { Units } from '@turf/helpers';
 import { Mode } from 'population-calculator/src/types';
-import { scaleToZoom, zoomToScale } from 'canvasmap/src/utils/zoomToScale';
+import { scaleToZoom, zoomToScale } from 'canvasmap';
 
 export function parseCenter(str: string | null): number[] {
   if (!str) throw new Error('Center Position not found!');

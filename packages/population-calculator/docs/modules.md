@@ -34,7 +34,7 @@ Name | Type | Description |
 
 feature object and an array of points within the feature
 
-Defined in: calcPopulation.ts:29
+Defined in: [calcPopulation.ts:33](https://github.com/cieloazul310/population/blob/902d785/packages/population-calculator/src/utils/calcPopulation.ts#L33)
 
 ___
 
@@ -58,4 +58,4 @@ Name | Type |
 
 **Returns:** *Promise*<*Stat*<T\>\>
 
-Defined in: calcPopulationFromFeature.ts:12
+Defined in: [calcPopulationFromFeature.ts:12](https://github.com/cieloazul310/population/blob/902d785/packages/population-calculator/src/utils/calcPopulationFromFeature.ts#L12)

@@ -12,10 +12,13 @@ const tiles: Tile[] = [
 
 describe('parseMVT: local tiles', () => {
   it('250mesh', () => {
-    return parseMVT<Point, Mesh250Properties>('/Users/cieloazul310/Documents/github/binarytiles/docs/tile/population_250m/{z}/{x}/{y}.mvt', [14582, 6414, 14], '250mesh')
-      .then((features) => {
-        expect(features.reduce((accum, curr) => accum + (curr.properties?.val ?? 0), 0)).toBe(1062);
-      });
+    return parseMVT<Point, Mesh250Properties>(
+      '/Users/cieloazul310/Documents/github/binarytiles/docs/tile/population_250m/{z}/{x}/{y}.mvt',
+      [14582, 6414, 14],
+      '250mesh'
+    ).then((features) => {
+      expect(features.reduce((accum, curr) => accum + (curr.properties?.val ?? 0), 0)).toBe(1062);
+    });
   });
 
   it('500mesh', () => {
@@ -23,12 +26,11 @@ describe('parseMVT: local tiles', () => {
       '/Users/cieloazul310/Documents/github/binarytiles/docs/tile/population_500m/{z}/{x}/{y}.mvt',
       [14582, 6414, 14],
       'merged'
-    )
-      .then((features) => {
-        expect(features.reduce((accum, curr) => accum + (curr.properties?.val_2005 ?? 0), 0)).toBe(649);
-        expect(features.reduce((accum, curr) => accum + (curr.properties?.val_2010 ?? 0), 0)).toBe(643);
-        expect(features.reduce((accum, curr) => accum + (curr.properties?.val_2015 ?? 0), 0)).toBe(702);
-      });
+    ).then((features) => {
+      expect(features.reduce((accum, curr) => accum + (curr.properties?.val_2005 ?? 0), 0)).toBe(649);
+      expect(features.reduce((accum, curr) => accum + (curr.properties?.val_2010 ?? 0), 0)).toBe(643);
+      expect(features.reduce((accum, curr) => accum + (curr.properties?.val_2015 ?? 0), 0)).toBe(702);
+    });
   });
 
   it('Promise.all', () => {
@@ -40,12 +42,13 @@ describe('parseMVT: local tiles', () => {
           '250mesh'
         )
       )
-    ).then((mvtTiles) => mvtTiles.reduce((accum, curr) => [...accum, ...curr], []))
-    .then((features) => removeMultiple(features, (feature) => feature.properties?.id ?? 0))
-    .then((features) => {
-      const val = features.reduce((accum, curr) => accum + curr.properties?.val ?? 0, 0);
-      expect(features.length).toBeGreaterThan(0);
-      expect(val).toBe(59627);
-    });
+    )
+      .then((mvtTiles) => mvtTiles.reduce((accum, curr) => [...accum, ...curr], []))
+      .then((features) => removeMultiple(features, (feature) => feature.properties?.id ?? 0))
+      .then((features) => {
+        const val = features.reduce((accum, curr) => accum + curr.properties?.val ?? 0, 0);
+        expect(features.length).toBeGreaterThan(0);
+        expect(val).toBe(59627);
+      });
   });
 });

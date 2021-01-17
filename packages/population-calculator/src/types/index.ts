@@ -20,7 +20,7 @@ export type Tile = [number, number, number];
 export type Stat<T extends Mode, P = Properties> = {
   feature: Feature<Polygon, P>;
   points: ObjectType<T>[];
-}
+};
 
 export interface CircleProperties {
   center: Position;

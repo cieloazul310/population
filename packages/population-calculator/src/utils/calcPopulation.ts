@@ -23,8 +23,8 @@ export interface CalcPopulationOptions {
 }
 
 /**
- * 
- * @param {Array} center a coordinate of center 
+ *
+ * @param {Array} center a coordinate of center
  * @param {Array} radiuses array of radiuses
  * @param {String} mode 'mesh250' or 'mesh500'
  * @param options optional

@@ -1,6 +1,6 @@
-# Aoi Map for Data Visualization
+# Canvas Map for Data Visualization
 
-葵マップ -データビジュアライゼーションのための
+Canvas マップ -データビジュアライゼーションのための
 
 ## How to Use
 
@@ -17,18 +17,26 @@ map.renderBasemap('vector')
 ## Install
 
 ```sh
-yarn add aoi-map
+yarn add @cieloazul310/canvasmap
 ```
 
 ## API Reference
 
-class CanvasMap(width: number, height: number, feature, options)
+class CanvasMap(width: number, height: number, feature: object, options)
 
 ### constructor
 
 #### width (required): number
 
+生成する地図の横幅
+
 #### height (required): number
+
+生成する地図の縦幅
+
+#### Feature (*optional*): object
+
+地図の表示領域を地物、または GeoJSON オブジェクトで設定する
 
 #### options (*optional*)
 

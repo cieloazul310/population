@@ -7,10 +7,9 @@ const radius = 5;
 describe('calcPopulationFromFeature', () => {
   it('with circle', () => {
     const feature = circle(center, radius);
-    return calcPopulationFromFeature(feature, 'mesh250')
-      .then(({ points }) => {
-        expect(points.reduce((accum, curr) => accum + (curr.properties?.val ?? 0), 0)).toBe(117842);
-      });
+    return calcPopulationFromFeature(feature, 'mesh250').then(({ points }) => {
+      expect(points.reduce((accum, curr) => accum + (curr.properties?.val ?? 0), 0)).toBe(117842);
+    });
   });
 
   it('use local tiles', () => {

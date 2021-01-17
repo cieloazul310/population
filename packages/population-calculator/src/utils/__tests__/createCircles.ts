@@ -16,7 +16,11 @@ describe('createCircles', () => {
 
 describe('createCircles', () => {
   it('change unit', () => {
-    const circles = createCircles(center, radiuses.map((r) => r * 1000), { unit: 'meters' });
+    const circles = createCircles(
+      center,
+      radiuses.map((r) => r * 1000),
+      { unit: 'meters' }
+    );
     expect(circles.length).toBe(3);
     expect(circles[0].geometry.type === 'Polygon');
     expect(circles[0].properties.unit).toBe('meters');

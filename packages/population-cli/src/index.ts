@@ -1,4 +1,4 @@
-import { calcPopulation } from 'population-calculator';
+import { calcPopulation } from '@cieloazul310/population-calculator';
 import { CanvasMap } from '@cieloazul310/canvasmap';
 import { program } from 'commander';
 import { scaleSequential } from 'd3-scale';

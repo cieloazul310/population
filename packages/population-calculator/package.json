@@ -4,6 +4,17 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
+  "author": {
+    "name": "@cieloazul310",
+    "url": "https://cieloazul310.github.io"
+  },
+  "keywords": [
+    "Data Visualization",
+    "turf.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "ts-node --files src/index.ts",
     "dev:watch": "ts-node-dev --respawn --files src/index.ts",

@@ -2,7 +2,7 @@ import { calcPopulation } from '@cieloazul310/population-calculator';
 import { CanvasMap } from '@cieloazul310/canvasmap';
 import { program } from 'commander';
 import { scaleSequential } from 'd3-scale';
-import { interpolateSpectral } from 'd3-scale-chromatic'; 
+import { interpolateSpectral } from 'd3-scale-chromatic';
 import bbox from '@turf/bbox';
 import { parseCenter, parseRadiuses, parseUnit, parseMode, parseUrl, unitToString, pointRadius } from './utils/helpers';
 
@@ -56,7 +56,7 @@ calcPopulation(center, radiuses, 'mesh250', { unit, baseUrl, hard })
         const { width } = map.getSize();
         const projection = map.getProjection();
         const path = map.getPath().pointRadius(pointRadius(projection.scale(), mode));
-        
+
         points.forEach((point) => {
           context.beginPath();
           path(point);
@@ -84,7 +84,7 @@ calcPopulation(center, radiuses, 'mesh250', { unit, baseUrl, hard })
             context.textAlign = 'right';
             context.textBaseline = 'bottom';
             context.fillStyle = '#c44';
-            context.fillText(`${(feature.properties.radius)}${unitToString(unit)}`, width - 6, pos[1]);
+            context.fillText(`${feature.properties.radius}${unitToString(unit)}`, width - 6, pos[1]);
           }
         });
 

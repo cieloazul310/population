@@ -97,7 +97,13 @@ function getLabelSize(annoCtg: number): MapFontSizes {
 }
 
 function labelColor(annoCtg: number): string {
-  return [312, 1312, 2312].includes(annoCtg) ? '#977' : [321, 1321, 2321, 322, 1322, 2322].includes(annoCtg) ? '#aac' : annoCtg === 422 ? '#aaa' : '#ccc';
+  return [312, 1312, 2312].includes(annoCtg)
+    ? '#977'
+    : [321, 1321, 2321, 322, 1322, 2322].includes(annoCtg)
+    ? '#aac'
+    : annoCtg === 422
+    ? '#aaa'
+    : '#ccc';
 }
 
 function textPos({ properties }: Feature): [CanvasTextAlign, CanvasTextBaseline] {
@@ -113,13 +119,7 @@ export const symbol: VectorLayer = {
   layerName: 'symbol',
   render: (map: CanvasMap) => (feature: Feature) => {
     const context = map.getContext();
-    if (
-      !feature.properties ||
-      !('ftCode' in feature.properties) ||
-      !feature.geometry ||
-      !('coordinates' in feature.geometry)
-    )
-      return;
+    if (!feature.properties || !('ftCode' in feature.properties) || !feature.geometry || !('coordinates' in feature.geometry)) return;
     const fontSize = map.getMapFontSize();
     const { ftCode, knj, name } = feature.properties;
     if (!knj && !name) return;
@@ -134,5 +134,5 @@ export const symbol: VectorLayer = {
     context.strokeStyle = '#fff';
     context.strokeText(knj ?? name, x, y);
     context.fillText(knj ?? name, x, y);
-  }
-}
+  },
+};

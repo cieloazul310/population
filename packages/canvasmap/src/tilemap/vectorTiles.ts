@@ -21,7 +21,7 @@ export function vectorTiles(options?: Partial<Options>): (map: CanvasMap) => Pro
 
   return async (map: CanvasMap) => {
     const url = `https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/{z}/{x}/{y}.pbf`;
-    
+
     map.addAttribution('国土地理院');
     const { width, height } = map.getSize();
     const projection = map.getProjection();
@@ -35,7 +35,7 @@ export function vectorTiles(options?: Partial<Options>): (map: CanvasMap) => Pro
     const tiles = tile();
     console.log(`${tiles.length} tiles`);
     console.log(`tileZoom: ${tiles[0][2]}`);
-    
+
     const layerNames = [waterarea, contour, road, railway, label, symbol];
     const features = await Promise.all(
       tiles.map(([x, y, z]) =>
@@ -60,7 +60,7 @@ export function vectorTiles(options?: Partial<Options>): (map: CanvasMap) => Pro
       )
     );
     const layers = layerNames.map((_, i) => features.map((feature) => feature[i]).reduce((accum, curr) => [...accum, ...curr], []));
-    
+
     if (opt.background !== 'none' && !opt.backgroundFeature) {
       context.fillStyle = opt.background;
       context.fillRect(0, 0, width, height);
@@ -68,7 +68,7 @@ export function vectorTiles(options?: Partial<Options>): (map: CanvasMap) => Pro
     if (opt.backgroundFeature) {
       context.fillStyle = '#eee';
       context.fillRect(0, 0, width, height);
-      
+
       context.beginPath();
       path(opt.backgroundFeature as ExtendedFeature);
       context.fillStyle = '#fff';
@@ -80,7 +80,7 @@ export function vectorTiles(options?: Partial<Options>): (map: CanvasMap) => Pro
       features.forEach((feature) => {
         context.beginPath();
         path(feature as ExtendedFeature);
-        render(feature)
+        render(feature);
       });
     });
   };

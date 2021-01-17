@@ -5,15 +5,19 @@ import { meshPoints } from './helpers';
 import { Feature, Polygon } from '@turf/helpers';
 import { Mode, Stat } from '../types';
 
-interface Options {
+interface CalcPopulationFromFeatureOptions {
   baseUrl?: string;
+  hard: boolean;
 }
 
-export async function calcPopulationFromFeature<T extends Mode>(feature: Feature<Polygon>, mode: T, options?: Partial<Options>): Promise<Stat<T>> {
-
+export async function calcPopulationFromFeature<T extends Mode>(
+  feature: Feature<Polygon>,
+  mode: T,
+  options?: Partial<CalcPopulationFromFeatureOptions>
+): Promise<Stat<T>> {
   const tiles = getTilesFromFeature(feature, { min_zoom: 14, max_zoom: 14 }) ?? [];
   if (tiles.length === 0) throw new Error('There are no tiles');
-  if (tiles.length > 200) throw new Error('Too many tiles');
+  if (!options?.hard && tiles.length > 200) throw new Error('Too many tiles');
 
   try {
     const points = await getPopulationTiles(tiles, mode, { baseUrl: options?.baseUrl });

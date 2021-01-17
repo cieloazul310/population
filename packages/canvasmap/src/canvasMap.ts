@@ -69,7 +69,7 @@ export class CanvasMap {
           )
         : geoMercator();
 
-    if ((!isFeature(object) && !isFeatureCollection(object)) && this.options.center) {
+    if (!isFeature(object) && !isFeatureCollection(object) && this.options.center) {
       this.projection.center(this.options.center as [number, number]).translate([width / 2, height / 2]);
     }
     if (this.options.zoom) {
@@ -111,13 +111,12 @@ export class CanvasMap {
   }
 
   public async renderBasemap(type: 'vector' | 'raster', options?: Partial<TileMapOptions>): Promise<CanvasMap> {
-    
     if (type === 'vector') {
       await vectorTiles({ background: options?.background, backgroundFeature: options?.backgroundFeature })(this);
     } else {
       await rasterTiles(options?.tileUrl ?? 'https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
         grayScale: options?.rasterGrayScale ?? false,
-        attribution: options?.attribution
+        attribution: options?.attribution,
       })(this);
     }
     return this;

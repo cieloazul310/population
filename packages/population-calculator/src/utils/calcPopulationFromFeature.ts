@@ -2,7 +2,7 @@ import { getTilesFromFeature } from './getTilesFromFeature';
 import { getPopulationTiles } from './getPopulationTiles';
 import pointsWithinPolygon from '@turf/points-within-polygon';
 import { meshPoints } from './helpers';
-import { Feature, Polygon } from '@turf/helpers';
+import { Feature, Polygon, MultiPolygon } from '@turf/helpers';
 import { Mode, Stat } from '../types';
 
 interface CalcPopulationFromFeatureOptions {
@@ -11,7 +11,7 @@ interface CalcPopulationFromFeatureOptions {
 }
 
 export async function calcPopulationFromFeature<T extends Mode>(
-  feature: Feature<Polygon>,
+  feature: Feature<Polygon | MultiPolygon>,
   mode: T,
   options?: Partial<CalcPopulationFromFeatureOptions>
 ): Promise<Stat<T>> {

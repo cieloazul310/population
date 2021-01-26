@@ -21,7 +21,7 @@
     "lint:fix": "npm-run-all eslint:fix check-types format"
   },
   "dependencies": {
-    "@cieloazul310/canvasmap": "^0.0.1",
+    "@cieloazul310/canvasmap": "^0.0.3",
     "@cieloazul310/population-calculator": "0.0.1",
     "@turf/bbox": "^6.2.0",
     "@turf/helpers": "^6.2.0",

@@ -1,4 +1,4 @@
-import { Units, Position, Feature, Polygon, Point, Properties } from '@turf/helpers';
+import { Units, Position, Feature, Polygon, MultiPolygon, Point, Properties } from '@turf/helpers';
 
 /**
  * population mode 'mesh250' or 'mesh500'
@@ -18,7 +18,7 @@ export type Tile = [number, number, number];
  * Stat Object has a feature and an array of population point features within the feature
  */
 export type Stat<T extends Mode, P = Properties> = {
-  feature: Feature<Polygon, P>;
+  feature: Feature<Polygon | MultiPolygon, P>;
   points: ObjectType<T>[];
 };
 

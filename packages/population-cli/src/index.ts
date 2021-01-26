@@ -1,10 +1,8 @@
 import { calcPopulation } from '@cieloazul310/population-calculator';
 import { CanvasMap } from '@cieloazul310/canvasmap';
 import { program } from 'commander';
-import { scaleSequential } from 'd3-scale';
-import { interpolateSpectral } from 'd3-scale-chromatic';
 import bbox from '@turf/bbox';
-import { parseCenter, parseRadiuses, parseUnit, parseMode, parseUrl, unitToString, pointRadius } from './utils/helpers';
+import { parseCenter, parseRadiuses, parseUnit, parseMode, parseUrl, unitToString, pointRadius, pointColor } from './utils/helpers';
 
 program.version('0.0.1');
 
@@ -34,11 +32,6 @@ console.log(`unit: ${unit}`);
 console.log(`mode: ${mode}`);
 console.log(`baseUrl: ${baseUrl ?? ''}`);
 
-const color = (val: number) =>
-  (val > 100
-    ? scaleSequential(interpolateSpectral).domain([800, 100])
-    : scaleSequential(['#fff', interpolateSpectral(1)]).domain([0, 100]))(val);
-
 calcPopulation(center, radiuses, 'mesh250', { unit, baseUrl, hard })
   .then((population) => {
     population.forEach(({ feature, points }) => {
@@ -60,7 +53,7 @@ calcPopulation(center, radiuses, 'mesh250', { unit, baseUrl, hard })
         points.forEach((point) => {
           context.beginPath();
           path(point);
-          context.fillStyle = color(point.properties?.val ?? 0);
+          context.fillStyle = pointColor(point.properties?.val ?? 0);
           context.globalCompositeOperation = 'multiply';
           context.fill();
           context.globalCompositeOperation = 'source-over';

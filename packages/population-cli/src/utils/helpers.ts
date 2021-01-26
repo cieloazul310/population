@@ -1,3 +1,5 @@
+import { scaleSequential } from 'd3-scale';
+import { interpolateSpectral } from 'd3-scale-chromatic';
 import { Units } from '@turf/helpers';
 import { Mode } from '@cieloazul310/population-calculator/src/types';
 import { scaleToZoom, zoomToScale } from '@cieloazul310/canvasmap';
@@ -74,3 +76,9 @@ export function pointRadius(scale: number, mode: Mode): number {
     ? Math.max(defaultSize * (scale / zoomToScale(threshold[0])), 2)
     : defaultSize;
 }
+
+export function pointColor(val: number): string {
+  return (val > 100
+    ? scaleSequential(interpolateSpectral).domain([800, 100])
+    : scaleSequential(['#fff', interpolateSpectral(1)]).domain([0, 100]))(val)
+  };
